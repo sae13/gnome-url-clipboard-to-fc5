@@ -1,0 +1,11 @@
+{
+  "name": "gnome-url-clipboard-to-fc5",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/urlShortener.test.js",
+    "check": "node --check extension.js && node --check urlShortener.js",
+    "pack": "gnome-extensions pack --force --extra-source=urlShortener.js . && unzip -t url-shortener@fc5.ir.shell-extension.zip"
+  }
+}

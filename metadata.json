@@ -1,0 +1,8 @@
+{
+  "uuid": "url-shortener@fc5.ir",
+  "name": "کوتاهکنندهٔ نشانی",
+  "description": "کوتاهکردن نشانی موجود در کلیپبورد از نوار بالای گنوم",
+  "shell-version": ["48"],
+  "version": 1,
+  "url": "https://u.fc5.ir"
+}

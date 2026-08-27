@@ -1,0 +1,6 @@
+_bmad
+.agents
+_bmad-output
+*.shell-extension.zip
+*.sha256
+node_modules/
