@@ -27,12 +27,10 @@ export function createSlug(date = new Date(), random = Math.random) {
     throw new RangeError('منبع تصادفی نامعتبر است');
   const randomPart = Math.floor(sample * 90) + 10;
   return [
-    date.getFullYear(),
+    pad(date.getFullYear() % 100),
     pad(date.getMonth() + 1),
     pad(date.getDate()),
     pad(date.getHours()),
-    pad(date.getMinutes()),
-    pad(date.getSeconds()),
     pad(randomPart),
   ].join('');
 }

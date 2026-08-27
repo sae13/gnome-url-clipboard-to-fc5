@@ -15,7 +15,7 @@ The extension adds a link icon to the GNOME top bar. Copy a URL, click the icon,
 - Manual activation from a GNOME top-bar icon; it never monitors the clipboard continuously.
 - Accepts complete HTTP and HTTPS URLs.
 - Sends JSON directly with GNOME's built-in networking stack; no shell command or external runtime is used by the extension.
-- Generates a custom slug from local date and time followed by a random two-digit number.
+- Generates a custom slug from the local two-digit year, month, day, hour, and a random two-digit number.
 - Prevents concurrent shortening requests.
 - Keeps the clipboard unchanged after invalid input, network failure, or an invalid service response.
 - Shows GNOME notifications for success and failures.
@@ -24,13 +24,13 @@ The extension adds a link icon to the GNOME top bar. Copy a URL, click the icon,
 A generated slug has this shape:
 
 ```text
-YYYYMMDDhhmmssNN
+YYMMDDhhNN
 ```
 
 Example:
 
 ```text
-2026010200010169
+2601020069
 ```
 
 ### Compatibility
@@ -193,7 +193,7 @@ https://u.fc5.ir/shorten
 - عملیات فقط با فشردن نماد آغاز میشود و کلیپبورد بهصورت پیوسته پایش نمیشود.
 - نشانیهای کامل وب پذیرفته میشوند.
 - ارتباط شبکه با امکانات داخلی گنوم انجام میشود.
-- نامک از تاریخ و ساعت محلی و سپس یک عدد تصادفی دورقمی ساخته میشود.
+- نامک از سال دورقمی، ماه، روز و ساعت محلی و سپس یک عدد تصادفی دورقمی ساخته میشود.
 - درخواست همزمان ساخته نمیشود.
 - در ورودی نامعتبر، خطای شبکه یا پاسخ خراب، کلیپبورد تغییر نمیکند.
 - نتیجهٔ موفق یا خطا با اعلان گنوم نمایش داده میشود.
@@ -202,13 +202,13 @@ https://u.fc5.ir/shorten
 قالب نامک:
 
 ```text
-YYYYMMDDhhmmssNN
+YYMMDDhhNN
 ```
 
 نمونه:
 
 ```text
-2026010200010169
+2601020069
 ```
 
 ### سازگاری

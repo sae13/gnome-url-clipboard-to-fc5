@@ -27,18 +27,18 @@ test('اعتبارسنجی در محیط گنوم بدون سازندهٔ سرا
   }
 });
 
-test('نامک از زمان محلی و عدد تصادفی دورقمی ساخته میشود', () => {
+test('نامک از سال دورقمی، ماه، روز، ساعت و عدد تصادفی دورقمی ساخته میشود', () => {
   const date = new Date(2026, 0, 2, 0, 1, 1);
-  assert.equal(createSlug(date, () => 0.655), '2026010200010168');
-  assert.match(createSlug(date, () => 0), /^2026010200010110$/);
-  assert.match(createSlug(date, () => 0.999999), /^2026010200010199$/);
+  assert.equal(createSlug(date, () => 0.655), '2601020068');
+  assert.match(createSlug(date, () => 0), /^2601020010$/);
+  assert.match(createSlug(date, () => 0.999999), /^2601020099$/);
   assert.throws(() => createSlug(date, () => Number.NaN), /تصادفی/);
 });
 
 test('بدنهٔ درخواست شامل نشانی، نامک سفارشی و hidden درست است', () => {
-  assert.deepEqual(buildRequestBody('https://example.com/x', '2026010200010169'), {
+  assert.deepEqual(buildRequestBody('https://example.com/x', '2601020069'), {
     url: 'https://example.com/x',
-    custom_slug: '2026010200010169',
+    custom_slug: '2601020069',
     hidden: true,
   });
 });
