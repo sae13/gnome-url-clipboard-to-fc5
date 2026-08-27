@@ -21,17 +21,25 @@ export function validateUrl(value) {
   return input;
 }
 
+const MONTH_CODES = 'abcdefghijkl';
+const DAY_CODES = '123456789abcdefghijklmnopqrstuv';
+const HOUR_CODES = 'abcdefghijklmnopqrstuvwx';
+const RANDOM_CODES = '0123456789abcdefghijklmnopqrstuvwxyz';
+
 export function createSlug(date = new Date(), random = Math.random) {
+  if (!(date instanceof Date) || !Number.isFinite(date.getTime()))
+    throw new RangeError('تاریخ نامعتبر است');
+
   const sample = random();
   if (!Number.isFinite(sample) || sample < 0 || sample >= 1)
     throw new RangeError('منبع تصادفی نامعتبر است');
-  const randomPart = Math.floor(sample * 90) + 10;
+
   return [
     pad(date.getFullYear() % 100),
-    pad(date.getMonth() + 1),
-    pad(date.getDate()),
-    pad(date.getHours()),
-    pad(randomPart),
+    MONTH_CODES[date.getMonth()],
+    DAY_CODES[date.getDate() - 1],
+    HOUR_CODES[date.getHours()],
+    RANDOM_CODES[Math.floor(sample * RANDOM_CODES.length)],
   ].join('');
 }
 

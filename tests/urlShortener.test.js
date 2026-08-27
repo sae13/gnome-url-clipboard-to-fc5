@@ -27,18 +27,43 @@ test('اعتبارسنجی در محیط گنوم بدون سازندهٔ سرا
   }
 });
 
-test('نامک از سال دورقمی، ماه، روز، ساعت و عدد تصادفی دورقمی ساخته میشود', () => {
+test('نامک فشرده از سال، ماه، روز، ساعت و یک نویسهٔ تصادفی ساخته میشود', () => {
   const date = new Date(2026, 0, 2, 0, 1, 1);
-  assert.equal(createSlug(date, () => 0.655), '2601020068');
-  assert.match(createSlug(date, () => 0), /^2601020010$/);
-  assert.match(createSlug(date, () => 0.999999), /^2601020099$/);
+  assert.equal(createSlug(date, () => 0), '26a2a0');
+  assert.equal(createSlug(new Date(2026, 11, 31, 23), () => 0.999999), '26lvxz');
+  assert.equal(createSlug(new Date(2026, 9, 10, 1), () => 10 / 36), '26jaba');
   assert.throws(() => createSlug(date, () => Number.NaN), /تصادفی/);
+  assert.match(createSlug(date, () => 0.5), /^[0-9]{2}[a-l][1-9a-v][a-x][0-9a-z]$/);
+});
+
+test('همهٔ نگاشتهای ماه، روز و ساعت پایدار هستند', () => {
+  const months = Array.from({length: 12}, (_, month) =>
+    createSlug(new Date(2026, month, 1, 0), () => 0)[2]
+  ).join('');
+  assert.equal(months, 'abcdefghijkl');
+
+  const days = Array.from({length: 31}, (_, day) =>
+    createSlug(new Date(2026, 0, day + 1, 0), () => 0)[3]
+  ).join('');
+  assert.equal(days, '123456789abcdefghijklmnopqrstuv');
+
+  const hours = Array.from({length: 24}, (_, hour) =>
+    createSlug(new Date(2026, 0, 1, hour), () => 0)[4]
+  ).join('');
+  assert.equal(hours, 'abcdefghijklmnopqrstuvwx');
+});
+
+test('تاریخ و منبع تصادفی نامعتبر رد میشوند', () => {
+  assert.throws(() => createSlug(new Date('invalid')), /تاریخ/);
+  assert.throws(() => createSlug(null), /تاریخ/);
+  for (const value of [Number.NaN, Number.POSITIVE_INFINITY, -0.01, 1])
+    assert.throws(() => createSlug(new Date(2026, 0, 1), () => value), /تصادفی/);
 });
 
 test('بدنهٔ درخواست شامل نشانی، نامک سفارشی و hidden درست است', () => {
-  assert.deepEqual(buildRequestBody('https://example.com/x', '2601020069'), {
+  assert.deepEqual(buildRequestBody('https://example.com/x', '26a2a0'), {
     url: 'https://example.com/x',
-    custom_slug: '2601020069',
+    custom_slug: '26a2a0',
     hidden: true,
   });
 });

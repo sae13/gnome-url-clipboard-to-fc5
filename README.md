@@ -15,7 +15,7 @@ The extension adds a link icon to the GNOME top bar. Copy a URL, click the icon,
 - Manual activation from a GNOME top-bar icon; it never monitors the clipboard continuously.
 - Accepts complete HTTP and HTTPS URLs.
 - Sends JSON directly with GNOME's built-in networking stack; no shell command or external runtime is used by the extension.
-- Generates a custom slug from the local two-digit year, month, day, hour, and a random two-digit number.
+- Generates a compact six-character slug from the local date/hour plus one random lowercase alphanumeric character.
 - Prevents concurrent shortening requests.
 - Keeps the clipboard unchanged after invalid input, network failure, or an invalid service response.
 - Shows GNOME notifications for success and failures.
@@ -24,14 +24,22 @@ The extension adds a link icon to the GNOME top bar. Copy a URL, click the icon,
 A generated slug has this shape:
 
 ```text
-YYMMDDhhNN
+YYMDHR
 ```
 
 Example:
 
 ```text
-2601020069
+26a2a0
 ```
+
+Encoding rules:
+
+- Year: two decimal digits.
+- Month: January through December map to `a` through `l`.
+- Day: 1 through 9 stay numeric; 10 through 31 map to `a` through `v`.
+- Hour: 0 through 23 map to `a` through `x`.
+- Random suffix: one lowercase character from `0-9a-z`.
 
 ### Compatibility
 
@@ -193,7 +201,7 @@ https://u.fc5.ir/shorten
 - عملیات فقط با فشردن نماد آغاز میشود و کلیپبورد بهصورت پیوسته پایش نمیشود.
 - نشانیهای کامل وب پذیرفته میشوند.
 - ارتباط شبکه با امکانات داخلی گنوم انجام میشود.
-- نامک از سال دورقمی، ماه، روز و ساعت محلی و سپس یک عدد تصادفی دورقمی ساخته میشود.
+- نامک از سال دورقمی و نویسههای فشردهٔ ماه، روز، ساعت و یک نویسهٔ تصادفی ساخته میشود.
 - درخواست همزمان ساخته نمیشود.
 - در ورودی نامعتبر، خطای شبکه یا پاسخ خراب، کلیپبورد تغییر نمیکند.
 - نتیجهٔ موفق یا خطا با اعلان گنوم نمایش داده میشود.
@@ -202,13 +210,40 @@ https://u.fc5.ir/shorten
 قالب نامک:
 
 ```text
-YYMMDDhhNN
+YYMDHR
 ```
 
 نمونه:
 
 ```text
-2601020069
+26a2a0
+```
+
+قواعد تبدیل:
+
+- سال با دو رقم نوشته میشود.
+- ماههای یک تا دوازده به حروف زیر تبدیل میشوند.
+
+```text
+a تا l
+```
+
+- روزهای یک تا نه عدد میمانند و روزهای ده تا سیویک به حروف زیر تبدیل میشوند.
+
+```text
+a تا v
+```
+
+- ساعتهای صفر تا بیستوسه به حروف زیر تبدیل میشوند.
+
+```text
+a تا x
+```
+
+- پسوند تصادفی یک نویسه از مجموعهٔ زیر است.
+
+```text
+0-9a-z
 ```
 
 ### سازگاری
@@ -353,6 +388,14 @@ gnome-extensions info url-shortener@fc5.ir
 journalctl --user --since "10 minutes ago" --no-pager
 ```
 
-## License
+## Versioning and license
 
-MIT
+The package release version follows semantic versioning. GNOME also requires a separate monotonically increasing integer in the extension metadata. Release `2.0.0` uses metadata version `3`.
+
+The compact slug format is a public behavior of version 2. It intentionally provides only 36 variants per local clock hour; the service can reject a collision and the extension reports that failure rather than silently changing the requested format. Local clock changes and daylight-saving fallback can repeat an hour bucket.
+
+Starting with version `2.0.0`, the project is relicensed from MIT to GPL version 3 or later. Redistribution and derivative works must comply with the GPL terms in `LICENSE`.
+
+Copyright © 2026 sae13.
+
+GPL-3.0-or-later
