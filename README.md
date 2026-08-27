@@ -19,6 +19,7 @@ The extension adds a link icon to the GNOME top bar. Copy a URL, click the icon,
 - Prevents concurrent shortening requests.
 - Keeps the clipboard unchanged after invalid input, network failure, or an invalid service response.
 - Shows GNOME notifications for success and failures.
+- Shows the generated short URL at the end of the success notification.
 - Works alongside clipboard managers such as CopyQ.
 
 A generated slug has this shape:
@@ -205,6 +206,7 @@ https://u.fc5.ir/shorten
 - درخواست همزمان ساخته نمیشود.
 - در ورودی نامعتبر، خطای شبکه یا پاسخ خراب، کلیپبورد تغییر نمیکند.
 - نتیجهٔ موفق یا خطا با اعلان گنوم نمایش داده میشود.
+- نشانی کوتاه تولیدشده در انتهای اعلان موفقیت نمایش داده میشود.
 - استفاده همزمان با مدیر کلیپبورد کپیکیو مشکلی ندارد.
 
 قالب نامک:

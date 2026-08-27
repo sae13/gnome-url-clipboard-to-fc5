@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.0 - 2026-08-28
+
+- Show the generated short URL at the end of the success notification.
+
 ## 2.0.0 - 2026-08-28
 
 - Replace the numeric timestamp slug with a compact six-character format.

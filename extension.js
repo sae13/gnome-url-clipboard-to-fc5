@@ -9,6 +9,7 @@ import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
 
 import {
+  formatSuccessMessage,
   ShortenCoordinator,
 } from './urlShortener.js';
 
@@ -154,7 +155,7 @@ export default class UrlShortenerExtension extends Extension {
         this._notify('نوشتن نشانی کوتاه در کلیپبورد ممکن نشد.');
         return;
       }
-      this._notify('نشانی کوتاه در کلیپبورد قرار گرفت.');
+      this._notify(formatSuccessMessage(result.shortUrl));
     } finally {
       if (generation === this._generation) {
         this._busy = false;

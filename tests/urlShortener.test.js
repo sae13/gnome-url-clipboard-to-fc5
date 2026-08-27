@@ -4,10 +4,18 @@ import assert from 'node:assert/strict';
 import {
   buildRequestBody,
   createSlug,
+  formatSuccessMessage,
   parseShortenResponse,
   ShortenCoordinator,
   validateUrl,
 } from '../urlShortener.js';
+
+test('پیام موفقیت با نشانی کوتاه در انتهای متن ساخته میشود', () => {
+  assert.equal(
+    formatSuccessMessage('https://u.fc5.ir/26hscj'),
+    'نشانی کوتاه در کلیپبورد قرار گرفت.\nhttps://u.fc5.ir/26hscj'
+  );
+});
 
 test('فقط نشانی کامل HTTP یا HTTPS پذیرفته میشود', () => {
   assert.equal(validateUrl('https://example.com/path?q=1'), 'https://example.com/path?q=1');

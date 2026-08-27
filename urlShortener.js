@@ -51,6 +51,10 @@ export function buildRequestBody(url, slug) {
   };
 }
 
+export function formatSuccessMessage(shortUrl) {
+  return `نشانی کوتاه در کلیپبورد قرار گرفت.\n${shortUrl}`;
+}
+
 export function parseShortenResponse(text) {
   let payload;
   try {
