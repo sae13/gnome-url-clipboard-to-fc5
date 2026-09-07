@@ -6,14 +6,19 @@ import {
   createSlug,
   formatSuccessMessage,
   parseShortenResponse,
+  SERVICE_ENDPOINT,
   ShortenCoordinator,
   validateUrl,
 } from '../urlShortener.js';
 
+test('درخواست کوتاهسازی به دامنهٔ جدید فرستاده میشود', () => {
+  assert.equal(SERVICE_ENDPOINT, 'https://u.linxu.ir/shorten');
+});
+
 test('پیام موفقیت با نشانی کوتاه در انتهای متن ساخته میشود', () => {
   assert.equal(
-    formatSuccessMessage('https://u.fc5.ir/26hscj'),
-    'نشانی کوتاه در کلیپبورد قرار گرفت.\nhttps://u.fc5.ir/26hscj'
+    formatSuccessMessage('https://u.linxu.ir/26hscj'),
+    'نشانی کوتاه در کلیپبورد قرار گرفت.\nhttps://u.linxu.ir/26hscj'
   );
 });
 
@@ -76,8 +81,28 @@ test('بدنهٔ درخواست شامل نشانی، نامک سفارشی و h
   });
 });
 
-test('پاسخ موفق از short_url خوانده میشود', () => {
-  assert.equal(parseShortenResponse('{"short_url":"https://u.fc5.ir/abc"}'), 'https://u.fc5.ir/abc');
+test('پاسخ موفق با دامنهٔ جدید برگردانده میشود', () => {
+  assert.equal(parseShortenResponse('{"short_url":"https://u.linxu.ir/abc"}'), 'https://u.linxu.ir/abc');
+});
+
+test('دامنهٔ قدیمی با حفظ کامل ادامهٔ نشانی به دامنهٔ جدید تبدیل میشود', () => {
+  assert.equal(
+    parseShortenResponse('{"short_url":"https://u.fc5.ir/a%20b?q=x%2Fy#part"}'),
+    'https://u.linxu.ir/a%20b?q=x%2Fy#part'
+  );
+});
+
+test('پاسخ سرویس فقط از دامنهٔ جدید یا قدیمی پذیرفته میشود', () => {
+  for (const value of [
+    '{"short_url":"https://example.org/abc"}',
+    '{"short_url":"http://u.linxu.ir/abc"}',
+    '{"short_url":"http://u.fc5.ir/abc"}',
+    '{"short_url":"https://U.FC5.IR/abc"}',
+    '{"short_url":"https://u.fc5.ir:443/abc"}',
+    '{"short_url":"https://u.linxu.ir.evil.test/abc"}',
+    '{"short_url":"https://u.fc5.ir@evil.test/abc"}',
+  ])
+    assert.throws(() => parseShortenResponse(value), /پاسخ نامعتبر/);
 });
 
 test('مقدار short_url باید یک نشانی کامل HTTP یا HTTPS باشد', () => {
@@ -114,7 +139,7 @@ test('مسیر موفق نشانی کوتاه را برمیگرداند', async 
     assert.equal(body.hidden, true);
     return {status: 200, body: '{"short_url":"https://u.fc5.ir/ok"}'};
   });
-  assert.deepEqual(result, {status: 'success', shortUrl: 'https://u.fc5.ir/ok'});
+  assert.deepEqual(result, {status: 'success', shortUrl: 'https://u.linxu.ir/ok'});
 });
 
 test('پاسخ خراب و وضعیت ناموفق خطای سرویس میدهند', async () => {

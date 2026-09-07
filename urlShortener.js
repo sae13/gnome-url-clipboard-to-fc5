@@ -1,3 +1,7 @@
+export const SERVICE_ORIGIN = 'https://u.linxu.ir';
+export const SERVICE_ENDPOINT = `${SERVICE_ORIGIN}/shorten`;
+const LEGACY_SERVICE_ORIGIN = 'https://u.fc5.ir';
+
 function pad(value) {
   return String(value).padStart(2, '0');
 }
@@ -66,6 +70,13 @@ export function parseShortenResponse(text) {
   if (!payload || typeof payload.short_url !== 'string' ||
       payload.short_url !== payload.short_url.trim() ||
       validateUrl(payload.short_url) === null)
+    throw new Error('پاسخ نامعتبر سرویس');
+
+  const currentPrefix = `${SERVICE_ORIGIN}/`;
+  const legacyPrefix = `${LEGACY_SERVICE_ORIGIN}/`;
+  if (payload.short_url.startsWith(legacyPrefix))
+    return `${currentPrefix}${payload.short_url.slice(legacyPrefix.length)}`;
+  if (!payload.short_url.startsWith(currentPrefix))
     throw new Error('پاسخ نامعتبر سرویس');
 
   return payload.short_url;

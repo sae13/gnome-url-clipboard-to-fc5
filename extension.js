@@ -10,10 +10,9 @@ import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
 
 import {
   formatSuccessMessage,
+  SERVICE_ENDPOINT,
   ShortenCoordinator,
 } from './urlShortener.js';
-
-const ENDPOINT = 'https://u.fc5.ir/shorten';
 const REQUEST_TIMEOUT_SECONDS = 15;
 
 const UrlShortenerIndicator = GObject.registerClass(
@@ -111,7 +110,7 @@ export default class UrlShortenerExtension extends Extension {
     this._indicator?.setBusy(true);
     try {
       const result = await this._coordinator.execute(clipboardText, async requestBody => {
-        const message = Soup.Message.new('POST', ENDPOINT);
+        const message = Soup.Message.new('POST', SERVICE_ENDPOINT);
         message.set_request_body_from_bytes(
           'application/json',
           new GLib.Bytes(new TextEncoder().encode(JSON.stringify(requestBody)))

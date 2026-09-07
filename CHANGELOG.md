@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.2.0 - 2026-09-07
+
+- Send shortening requests to `https://u.linxu.ir/shorten`.
+- Rewrite the exact legacy `https://u.fc5.ir/` response origin to `https://u.linxu.ir/`.
+- Increment the GNOME metadata version to `5` while retaining the existing UUID for in-place upgrades.
+
 ## 2.1.0 - 2026-08-28
 
 - Show the generated short URL at the end of the success notification.

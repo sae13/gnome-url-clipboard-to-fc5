@@ -1,10 +1,10 @@
-# GNOME URL Clipboard Shortener for fc5.ir
+# GNOME URL Clipboard Shortener for linxu.ir
 
 [فارسی](#فارسی) | [English](#english)
 
-A small GNOME Shell 48 extension that shortens the HTTP or HTTPS URL currently stored in the clipboard through the fc5.ir shortening service.
+A small GNOME Shell 48 extension that shortens the HTTP or HTTPS URL currently stored in the clipboard through the linxu.ir shortening service.
 
-https://u.fc5.ir/shorten
+https://u.linxu.ir/shorten
 
 The extension adds a link icon to the GNOME top bar. Copy a URL, click the icon, and the returned short URL replaces the current clipboard content.
 
@@ -53,7 +53,7 @@ The current metadata intentionally declares GNOME Shell 48 only. Support for ano
 
 The extension does not continuously watch the clipboard and does not persist or log clipboard data itself. Clicking the icon sends the current URL to the following external service:
 
-https://u.fc5.ir/shorten
+https://u.linxu.ir/shorten
 
 The service receives the original URL, the generated custom slug, and the following visibility flag:
 
@@ -63,7 +63,9 @@ The service receives the original URL, the generated custom slug, and the follow
 }
 ```
 
-The external service has its own storage, logging, and retention policy.
+The external service has its own storage, logging, and retention policy. During the service migration, the API may still return a legacy `u.fc5.ir` URL; the extension rewrites that exact HTTPS origin to `u.linxu.ir` before updating the clipboard.
+
+The extension UUID, archive filename, and repository name intentionally retain `fc5.ir` so existing installations upgrade in place instead of appearing as a second extension.
 
 ### Install from a GitHub release
 
@@ -153,8 +155,8 @@ The continuous-integration workflow tests the JavaScript code and builds the ext
 The release workflow runs when a semantic-version tag is pushed:
 
 ```bash
-git tag v1.0.0
-git push origin v1.0.0
+git tag v2.2.0
+git push origin v2.2.0
 ```
 
 It verifies that the tag matches the semantic version declared in the package manifest, runs the tests, builds and validates the ZIP file, calculates a checksum, and publishes both files in a GitHub release.
@@ -193,7 +195,7 @@ journalctl --user --since "10 minutes ago" --no-pager
 
 این افزونه برای نسخهٔ چهلوهشت پوستهٔ گنوم ساخته شده است. یک نماد پیوند به نوار بالای صفحه اضافه میکند. پس از کپیکردن نشانی، با فشردن نماد، نشانی فعلی کلیپبورد برای کوتاهشدن به سرویس زیر فرستاده میشود:
 
-https://u.fc5.ir/shorten
+https://u.linxu.ir/shorten
 
 نشانی کوتاه برگشتی جای متن فعلی کلیپبورد قرار میگیرد.
 
@@ -259,7 +261,7 @@ a تا x
 
 خود افزونه کلیپبورد را بهصورت پیوسته پایش نمیکند و دادهای را ذخیره یا ثبت نمیکند. با فشردن نماد، نشانی فعلی برای سرویس بیرونی ارسال میشود:
 
-https://u.fc5.ir/shorten
+https://u.linxu.ir/shorten
 
 درخواست شامل نشانی اصلی، نامک تولیدشده و مقدار زیر است:
 
@@ -269,7 +271,9 @@ https://u.fc5.ir/shorten
 }
 ```
 
-سیاست ذخیرهسازی و نگهداری دادهٔ سرویس بیرونی مستقل از این افزونه است.
+سیاست ذخیرهسازی و نگهداری دادهٔ سرویس بیرونی مستقل از این افزونه است. در دورهٔ مهاجرت سرویس ممکن است رابط همچنان نشان قدیمی `u.fc5.ir` را برگرداند؛ افزونه پیش از نوشتن کلیپبورد، دقیقاً همین مبدأ امن را به `u.linxu.ir` تبدیل میکند.
+
+شناسهٔ افزونه، نام فایل بسته و نام مخزن عمداً `fc5.ir` را حفظ میکنند تا نصبهای موجود درجا ارتقا پیدا کنند و افزونهٔ دوم ساخته نشود.
 
 ### نصب از انتشار گیتهاب
 
@@ -354,8 +358,8 @@ unzip -t url-shortener@fc5.ir.shell-extension.zip
 گردش بررسی گیتهاب در هر درخواست ادغام و ارسال تغییر، آزمونها را اجرا و بسته را میسازد. گردش انتشار با ارسال یک برچسب نسخه اجرا میشود:
 
 ```bash
-git tag v1.0.0
-git push origin v1.0.0
+git tag v2.2.0
+git push origin v2.2.0
 ```
 
 گردش انتشار تطابق برچسب با نسخهٔ بسته را بررسی میکند، آزمونها را اجرا میکند، فایل فشرده و جمع کنترلی را میسازد و یک انتشار گیتهاب ایجاد میکند.
@@ -392,7 +396,7 @@ journalctl --user --since "10 minutes ago" --no-pager
 
 ## Versioning and license
 
-The package release version follows semantic versioning. GNOME also requires a separate monotonically increasing integer in the extension metadata. Release `2.0.0` uses metadata version `3`.
+The package release version follows semantic versioning. GNOME also requires a separate monotonically increasing integer in the extension metadata. Release `2.2.0` uses metadata version `5`.
 
 The compact slug format is a public behavior of version 2. It intentionally provides only 36 variants per local clock hour; the service can reject a collision and the extension reports that failure rather than silently changing the requested format. Local clock changes and daylight-saving fallback can repeat an hour bucket.
 

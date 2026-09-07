@@ -3,6 +3,6 @@
   "name": "کوتاهکنندهٔ نشانی",
   "description": "کوتاهکردن نشانی موجود در کلیپبورد از نوار بالای گنوم",
   "shell-version": ["48"],
-  "version": 4,
-  "url": "https://u.fc5.ir"
+  "version": 5,
+  "url": "https://github.com/sae13/gnome-url-clipboard-to-fc5"
 }
